@@ -1,0 +1,1364 @@
+/* =========================================
+   ПОДКЛЮЧЕНИЕ ШРИФТА BENZIN
+   ========================================= */
+@font-face {
+    font-family: 'Benzin';
+    src: url('../fonts/Benzin-Bold.ttf') format('truetype'); /* Проверь имя файла! */
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+/* =========================================
+   1. VARIABLES & RESET (IT-GUIDE CORE)
+   ========================================= */
+:root {
+    /* Colors */
+    --bg-dark: #050505;
+    --bg-card: #0f0f0f;
+    --primary: #8a2be2; /* Violet */
+    --accent: #ff0033;  /* Red Glitch */
+    --text-main: #ffffff;
+    --text-muted: #888888;
+    
+    /* Gradients */
+    --gradient-main: linear-gradient(45deg, var(--primary), #4b0082);
+    
+    /* Fonts */
+    --font-head: 'Benzin', sans-serif;
+    --font-body: 'Montserrat', sans-serif;
+    
+    /* Spacing & Layout */
+    --container-width: 1240px;
+    --header-height: 80px;
+    
+    /* Effects */
+    --glass: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --blur: blur(10px);
+    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+a { text-decoration: none; color: inherit; transition: var(--transition); }
+ul { list-style: none; }
+img { max-width: 100%; display: block; }
+
+/* Кастомный скроллбар */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #fff; }
+
+/* Утилиты */
+.container {
+    max-width: var(--container-width);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.text-accent { color: var(--primary); }
+.text-center { text-align: center; }
+
+/* =========================================
+   2. UI COMPONENTS (BUTTONS, CARDS)
+   ========================================= */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 35px;
+    font-family: var(--font-head);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--transition);
+    border: none;
+    gap: 10px;
+}
+
+.btn--primary {
+    background: var(--primary);
+    color: #fff;
+    clip-path: polygon(10% 0, 100% 0, 100% 70%, 90% 100%, 0 100%, 0 30%);
+}
+
+.btn--primary:hover {
+    background: #fff;
+    color: var(--bg-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+}
+
+.btn--outline {
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    color: #fff;
+}
+
+.btn--outline:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.btn--small { padding: 8px 20px; font-size: 0.8rem; }
+
+/* Glass Card */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: var(--blur);
+    border: 1px solid var(--glass-border);
+    padding: 30px;
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-10px);
+    background: rgba(138, 43, 226, 0.05);
+}
+
+/* =========================================
+   3. PRELOADER & ANIMATIONS
+   ========================================= */
+.preloader {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader__text {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    font-weight: bold;
+    letter-spacing: 5px;
+    animation: pulse 2s infinite;
+}
+
+.preloader__bar {
+    width: 200px;
+    height: 2px;
+    background: #222;
+    margin-top: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.preloader__progress {
+    width: 100%;
+    height: 100%;
+    background: var(--primary);
+    animation: load 2s ease-in-out forwards;
+    transform: translateX(-100%);
+}
+
+/* Glitch Effect */
+.glitch {
+    position: relative;
+    color: white;
+}
+
+.glitch::before, .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg-dark);
+}
+
+.glitch::before {
+    left: 2px; text-shadow: -1px 0 var(--accent);
+    clip: rect(24px, 550px, 90px, 0);
+    animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+.glitch::after {
+    left: -2px; text-shadow: -1px 0 var(--primary);
+    clip: rect(85px, 550px, 140px, 0);
+    animation: glitch-anim 2.5s infinite linear alternate-reverse;
+}
+
+/* Keyframes */
+@keyframes load { 100% { transform: translateX(0); } }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+@keyframes glitch-anim { 
+    0% { clip: rect(12px, 9999px, 5px, 0); }
+    20% { clip: rect(89px, 9999px, 78px, 0); }
+    40% { clip: rect(12px, 9999px, 86px, 0); }
+    60% { clip: rect(44px, 9999px, 12px, 0); }
+    80% { clip: rect(67px, 9999px, 34px, 0); }
+    100% { clip: rect(10px, 9999px, 92px, 0); }
+}
+
+/* =========================================
+   4. HEADER & NAV
+   ========================================= */
+.header {
+    position: fixed;
+    top: 0; left: 0; width: 100%;
+    height: var(--header-height);
+    background: rgba(5, 5, 5, 0.8);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
+
+.logo__symbol { color: var(--primary); }
+
+.nav__list { display: flex; gap: 40px; }
+
+.nav__link {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    position: relative;
+}
+
+.nav__link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 0; width: 0; height: 2px;
+    background: var(--primary);
+    transition: var(--transition);
+}
+
+.nav__link:hover::after, .nav__link.active::after { width: 100%; }
+.nav__link:hover, .nav__link.active { color: var(--primary); }
+
+.header__actions { display: flex; align-items: center; gap: 20px; }
+.burger { display: none; cursor: pointer; flex-direction: column; gap: 5px; }
+.burger span { width: 30px; height: 2px; background: #fff; }
+
+/* =========================================
+   5. HERO SECTION
+   ========================================= */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-top: var(--header-height);
+}
+
+.hero__bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+}
+
+.hero__image {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.6;
+}
+
+.hero__overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, rgba(0,0,0,0) 0%, rgba(5,5,5,1) 90%);
+}
+
+.hero__subtitle {
+    color: var(--primary);
+    letter-spacing: 5px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.hero__title {
+    font-family: var(--font-head);
+    font-size: 5rem;
+    line-height: 1;
+    margin-bottom: 30px;
+    font-weight: 900;
+}
+
+.hero__desc {
+    max-width: 600px;
+    color: #ccc;
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+}
+
+.hero__buttons { display: flex; gap: 20px; }
+
+/* Scroll Down Indicator */
+.scroll-down {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    opacity: 0.7;
+}
+
+.scroll-down__line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, #fff, transparent);
+}
+
+/* =========================================
+   6. SECTIONS (ABOUT, RELEASES)
+   ========================================= */
+.section { padding: 120px 0; position: relative; }
+
+.section-title {
+    font-family: var(--font-head);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.section-line {
+    width: 60px; height: 3px;
+    background: var(--primary);
+    margin: 0 auto 60px;
+}
+
+/* Marquee */
+.marquee-section {
+    background: var(--primary);
+    padding: 15px 0;
+    transform: rotate(-2deg) scale(1.1);
+    overflow: hidden;
+}
+
+.marquee__inner {
+    white-space: nowrap;
+    animation: move-rtl 20s linear infinite;
+    font-family: var(--font-head);
+    font-weight: 900;
+    font-size: 1.5rem;
+    color: #000;
+}
+
+@keyframes move-rtl { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+/* About Grid */
+.about__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+.about__icon { font-size: 2rem; color: var(--primary); margin-bottom: 20px; }
+.about__card h3 { font-family: var(--font-head); margin-bottom: 15px; }
+
+/* Releases Grid */
+.releases__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.release-card { cursor: pointer; }
+
+.release-card__image {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.release-card__image img {
+    transition: transform 0.6s ease;
+    width: 100%; aspect-ratio: 1/1; object-fit: cover;
+}
+
+.release-card:hover img { transform: scale(1.1); }
+
+.release-card__overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.release-card:hover .release-card__overlay { opacity: 1; }
+
+.btn-play {
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: none; color: #fff; font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.release-card__info h4 { font-family: var(--font-head); font-size: 1.2rem; }
+.release-card__info p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* =========================================
+   7. FOOTER & RESPONSIVE
+   ========================================= */
+.footer {
+    border-top: 1px solid var(--glass-border);
+    padding: 50px 0;
+    background: #000;
+}
+
+.footer__container {
+    display: flex; justify-content: space-between; align-items: center;
+}
+
+.social-btn {
+    font-size: 1.5rem; color: #fff; margin-left: 20px;
+}
+
+.social-btn:hover { color: var(--primary); transform: scale(1.2); }
+
+/* Mobile */
+@media (max-width: 768px) {
+    .nav { display: none; }
+    .burger { display: flex; }
+    
+    .hero__title { font-size: 3rem; }
+    .about__grid { grid-template-columns: 1fr; }
+    
+    .mobile-menu {
+        position: fixed; top: 0; right: 0;
+        width: 100%; height: 100vh;
+        background: var(--bg-dark);
+        z-index: 999;
+        transform: translateX(100%);
+        transition: transform 0.4s ease;
+        display: flex; justify-content: center; align-items: center;
+    }
+    
+    .mobile-menu.active { transform: translateX(0); }
+    .mobile-nav { display: flex; flex-direction: column; gap: 30px; text-align: center; }
+    .mobile-nav__link { font-family: var(--font-head); font-size: 2rem; }
+}
+
+/* =========================================
+   AUDIO PLAYER BAR (SPOTIFY STYLE)
+   ========================================= */
+.player-bar {
+    position: fixed;
+    bottom: -120px; /* Спрятан под экраном */
+    left: 0;
+    width: 100%;
+    background: rgba(10, 10, 10, 0.95); /* Темный фон */
+    backdrop-filter: blur(10px); /* Размытие фона под плеером */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 0;
+    z-index: 9999; /* Поверх всего */
+    transition: bottom 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); /* Плавный выезд */
+    box-shadow: 0 -5px 20px rgba(0,0,0,0.8);
+}
+
+.player-bar.active {
+    bottom: 0; /* Выезжает наверх */
+}
+
+.player-container {
+    max-width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* 1. Инфо о треке (Слева) */
+.player-info {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    gap: 15px;
+}
+
+.player-cover {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.player-meta h4 {
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+    color: #fff;
+    font-weight: 600;
+}
+
+.player-meta p {
+    font-size: 0.75rem;
+    color: #b3b3b3;
+}
+
+/* 2. Центр (Кнопки и прогресс) */
+.player-center {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.player-btn {
+    background: none;
+    border: none;
+    color: #b3b3b3;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.2s, transform 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-btn:hover { color: #fff; }
+.player-btn:active { transform: scale(0.95); }
+
+/* Кнопка Play/Pause (Круглая белая) */
+.player-btn.play-pause {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #fff;
+    color: #000;
+    font-size: 1rem;
+}
+
+.player-btn.play-pause:hover {
+    transform: scale(1.05);
+    background: #f0f0f0;
+}
+
+.player-progress {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.7rem;
+    color: #b3b3b3;
+    font-family: monospace; /* Моноширинный шрифт для цифр */
+}
+
+/* Ползунки (Range Inputs) */
+input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #4d4d4d;
+    border-radius: 2px;
+    cursor: pointer;
+    outline: none;
+}
+
+/* Кругляшок ползунка */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 12px;
+    width: 12px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    opacity: 0; /* Скрыт пока не наведешь */
+    transition: opacity 0.2s;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+    opacity: 1;
+}
+
+/* 3. Громкость (Справа) */
+.player-volume {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+
+.player-volume input {
+    width: 100px;
+}
+
+.player-volume i {
+    color: #b3b3b3;
+    font-size: 1rem;
+}
+
+/* Адаптив для мобильных */
+@media (max-width: 768px) {
+    .player-bar {
+        bottom: -150px;
+        padding: 10px;
+    }
+    
+    .player-container { 
+        flex-wrap: wrap; 
+    }
+    
+    .player-info { 
+        width: 100%; 
+        margin-bottom: 10px;
+    }
+    
+    .player-center { 
+        width: 100%; 
+    }
+    
+    .player-volume { 
+        display: none; /* Убираем громкость на телефоне */
+    }
+}
+
+/* Когда плеер активен, добавляем отступ всему сайту снизу, 
+   чтобы подвал мог подняться над плеером при скролле */
+body.has-player {
+    padding-bottom: 120px; /* Высота плеера + небольшой запас */
+    transition: padding-bottom 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); /* Плавный переход, как у самого плеера */
+}
+
+/* =========================================
+   СТИЛИ ДЛЯ ЦИТАТЫ (QUOTE)
+   ========================================= */
+.quote-box {
+    position: relative;
+    margin: 40px 0;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.03); /* Очень легкий фон */
+    border-left: 4px solid #8a2be2; /* Фиолетовая линия слева */
+    border-radius: 0 8px 8px 0;
+}
+
+.quote-icon {
+    font-size: 2rem;
+    color: #8a2be2; /* Фиолетовые кавычки */
+    margin-bottom: 15px;
+    display: block;
+    opacity: 0.8;
+}
+
+.quote-box p {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: #e0e0e0;
+}
+
+.quote-box cite {
+    display: block;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #888;
+    font-style: normal;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+}
+
+/* Адаптив для телефонов */
+@media (max-width: 768px) {
+    .quote-box {
+        padding: 20px;
+        margin: 30px 0;
+    }
+    .quote-box p {
+        font-size: 1rem;
+    }
+}
+
+/* =========================================
+   SPOTIFY EMBED
+   ========================================= */
+.spotify-embed {
+    margin-top: 30px;
+    max-width: 500px; /* Ограничиваем ширину, чтобы не был огромным */
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Тень для объема */
+    border-radius: 12px;
+}
+
+/* =========================================
+   ЛОГОТИП В ЗАГОЛОВКЕ СЕКЦИИ
+   ========================================= */
+.section-logo {
+    max-width: 300px; /* Оптимальный размер, чтобы не было огромным */
+    height: auto;
+    margin-bottom: 25px; /* Отступ от лого до линии снизу */
+    display: inline-block;
+    
+    /* МАГИЯ: Инвертируем цвета. 
+       Черный логотип станет белым и будет виден на темном фоне. */
+    filter: invert(1) brightness(2); 
+    
+    /* Убираем фон картинки, если он не идеально прозрачный */
+    mix-blend-mode: screen; 
+}
+
+/* На мобильных делаем чуть поменьше */
+@media (max-width: 768px) {
+    .section-logo {
+        max-width: 200px;
+    }
+}
+
+/* =========================================
+   TOURS PAGE STYLES
+   ========================================= */
+
+.tours-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 60px;
+    margin-top: 40px;
+}
+
+.tour-card {
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+.tour-card:hover {
+    transform: translateY(-5px);
+}
+
+.tour-image {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    /* Формат афиши обычно вертикальный (3:4) */
+    aspect-ratio: 3 / 4;
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.tour-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.tour-card:hover .tour-image img {
+    transform: scale(1.05);
+}
+
+.tour-overlay {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    padding: 30px 20px;
+    pointer-events: none; /* Чтобы клик проходил сквозь текст */
+}
+
+.tour-overlay h3 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 5px;
+    font-family: var(--font-head);
+    text-transform: uppercase;
+}
+
+.tour-overlay p {
+    color: var(--primary);
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.tour-actions {
+    margin-top: 25px;
+}
+
+.btn--full {
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    font-size: 1.2rem;
+}
+
+/* Адаптив для телефонов */
+@media (max-width: 768px) {
+    .tours-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .tour-overlay h3 {
+        font-size: 1.5rem;
+    }
+}
+
+/* =========================================
+   БУРГЕР МЕНЮ И МОБИЛЬНАЯ НАВИГАЦИЯ
+   ========================================= */
+
+/* 1. Сам значок бургера (по умолчанию скрыт на ПК) */
+.burger {
+    display: none; /* На компах не показываем */
+    width: 30px;
+    height: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+    z-index: 10001; /* Поверх всего */
+    position: relative;
+}
+
+.burger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* 2. Показываем бургер только на телефонах */
+@media (max-width: 768px) {
+    .burger {
+        display: flex; /* Включаем на мобилках */
+    }
+    
+    /* Скрываем обычное меню на мобилках */
+    .nav {
+        display: none;
+    }
+    
+    /* Кнопку Shop можно оставить или скрыть, по желанию */
+    .header__actions .btn {
+        display: none; /* Скроем кнопку Shop, чтобы не мешалась */
+    }
+}
+
+/* 3. Анимация превращения в крестик (когда активно) */
+.burger.active span:first-child {
+    transform: rotate(45deg) translate(5px, 6px);
+}
+
+.burger.active span:last-child {
+    transform: rotate(-45deg) translate(5px, -6px);
+}
+
+/* 4. Выпадающее меню (черный экран) */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000; /* Чуть ниже кнопки бургера */
+    
+    /* Скрыто по умолчанию (сдвинуто вверх) */
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* Когда меню активно - выезжает */
+.mobile-menu.active {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.mobile-nav__link {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s;
+}
+
+.mobile-nav__link:hover,
+.mobile-nav__link.active {
+    color: #8a2be2; /* Фиолетовый акцент */
+}
+
+/* =========================================
+   FIX V3 (ФИНАЛ): ПОЛИРОВКА МОБИЛЬНОЙ ВЕРСИИ
+   ========================================= */
+@media (max-width: 768px) {
+
+    /* --- ОБЩИЕ ОТСТУПЫ --- */
+    .container {
+        padding: 0 25px; /* Комфортные отступы по бокам */
+    }
+
+    .section {
+        padding: 70px 0; /* Чуть больше воздуха между секциями */
+    }
+
+    /* --- HERO СЕКЦИЯ (Где RR TV) --- */
+    .hero {
+        height: auto !important;
+        min-height: 85vh; /* Занимает почти весь экран */
+        padding-top: 130px; /* Больше отступ сверху от хедера */
+        padding-bottom: 70px; /* Больше отступ снизу */
+        align-items: center; /* Центрируем по вертикали */
+    }
+
+    .hero__content {
+        margin-top: 0 !important;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Увеличиваем расстояние между всеми элементами в герое */
+        gap: 35px; 
+    }
+
+    /* Картинка (RR TV) */
+    .hero__content img {
+        max-width: 65% !important; /* Оптимальная ширина */
+        max-height: 140px; /* Ограничиваем высоту, чтобы не была огромной */
+        width: auto;
+        height: auto;
+        margin: 0 auto !important;
+        object-fit: contain;
+    }
+
+    /* Тексты в герое */
+    .hero__title {
+        font-size: 2rem !important; /* Идеальный размер для мобилки */
+        line-height: 1.2;
+        margin-bottom: 5px; /* Дополнительный микро-отступ до подзаголовка */
+    }
+
+    .hero__subtitle {
+        font-size: 0.85rem;
+        letter-spacing: 3px; /* Чуть шире буквы для стиля */
+        opacity: 0.9;
+        margin-bottom: 0;
+    }
+
+    /* Кнопки в герое */
+    .hero__buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 20px; /* Комфортное расстояние между кнопками */
+        padding: 0;
+        margin-top: 15px;
+    }
+
+    .hero__buttons .btn {
+        width: 100%;
+        max-width: 340px; /* Чтобы на широких телефонах не были слишком длинными */
+        margin: 0 auto;
+        padding: 18px 30px; /* Сделали кнопки чуть "жирнее" по высоте */
+    }
+
+    /* --- ОСТАЛЬНЫЕ СЕКЦИИ (Без изменений из V2, они были ок) --- */
+    .section-header {
+        margin-bottom: 45px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .section-logo {
+        max-width: 160px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .section-title {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+        word-break: keep-all;
+    }
+
+    /* Кнопка "Полный каталог" внизу */
+    .text-center .btn--outline {
+        width: 100%;
+        max-width: 350px;
+        padding: 16px 25px;
+        font-size: 0.9rem;
+        line-height: 1.4;
+        white-space: normal;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+/* =========================================
+   AUTH MODAL (ЛИЧНЫЙ КАБИНЕТ)
+   ========================================= */
+.auth-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 20000; /* Поверх всего */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.auth-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.auth-modal {
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid rgba(255,255,255,0.1);
+    background: #0a0a0a;
+}
+
+.auth-overlay.active .auth-modal {
+    transform: scale(1);
+}
+
+.auth-close {
+    position: absolute;
+    top: 15px; right: 15px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Tabs */
+.auth-tabs {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.auth-tab {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 10px;
+    color: #888;
+    cursor: pointer;
+    font-family: var(--font-head);
+    font-size: 1rem;
+    transition: color 0.3s;
+}
+
+.auth-tab.active {
+    color: #fff;
+    border-bottom: 2px solid var(--primary);
+}
+
+/* Forms */
+.auth-form {
+    display: none; /* Скрыты по умолчанию */
+    flex-direction: column;
+    gap: 15px;
+}
+
+.auth-form.active {
+    display: flex; /* Показываем активную */
+    animation: fadeIn 0.4s ease;
+}
+
+.auth-form h3 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 15px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    border-radius: 4px;
+    outline: none;
+    font-family: var(--font-body);
+}
+
+.auth-form input:focus {
+    border-color: var(--primary);
+}
+
+/* User Profile Styling */
+.user-profile {
+    text-align: center;
+    animation: fadeIn 0.4s ease;
+}
+
+.profile-avatar {
+    width: 80px; height: 80px;
+    background: var(--gradient-main);
+    border-radius: 50%;
+    margin: 0 auto 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+}
+
+.profile-status {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    padding: 5px 10px;
+    font-size: 0.7rem;
+    border-radius: 20px;
+    margin-top: 5px;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+}
+
+.profile-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    padding: 20px 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.stat-item span {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.stat-item p {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Стиль кнопки входа в мобильном меню */
+.btn-text-style {
+    background: none;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 10px 30px;
+    border-radius: 30px;
+    margin-top: 20px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif; /* Тот же шрифт, что у меню */
+    font-size: 1.2rem;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+/* =========================================
+   SOCIAL LOGIN BUTTONS
+   ========================================= */
+.social-login {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.social-login p {
+    color: #888;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.social-btns {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.btn-social {
+    flex: 1; /* Кнопки растягиваются равномерно */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body); /* */
+    font-weight: 600;
+    transition: transform 0.2s, opacity 0.2s;
+    color: #fff;
+}
+
+.btn-social:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+
+/* Цвета брендов */
+.btn-social.google {
+    background: #DB4437; /* Официальный цвет Google */
+}
+
+.btn-social.github {
+    background: #333; /* Официальный цвет GitHub */
+    border: 1px solid rgba(255,255,255,0.2);
+}
+
+.btn-social i {
+    font-size: 1.1rem;
+}
+
+/* =========================================
+   EDIT PROFILE (СМЕНА НИКА)
+   ========================================= */
+.profile-name-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Расстояние между именем и карандашом */
+    margin-bottom: 5px;
+}
+
+.edit-name-btn {
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-name-btn:hover {
+    color: var(--primary); /* Фиолетовый при наведении */
+    transform: scale(1.1);
+}
+
+/* =========================================
+   PAGE: ABOUT ME (DEV PROFILE)
+   ========================================= */
+
+.dev-avatar {
+    width: 150px;
+    height: 150px;
+    background: var(--gradient-main);
+    border-radius: 50%;
+    margin: 0 auto 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 4rem;
+    color: #fff;
+    box-shadow: 0 0 50px rgba(138, 43, 226, 0.4);
+    border: 3px solid rgba(255,255,255,0.2);
+}
+
+/* Если захочешь поставить реальное фото вместо иконки */
+.dev-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.tech-item {
+    background: rgba(255,255,255,0.05);
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.9rem;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.tech-item:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    transform: translateY(-3px);
+}
+
+.tech-item i {
+    font-size: 1.1rem;
+}
+
+/* Адаптив для About Me */
+@media (max-width: 768px) {
+    .dev-avatar {
+        width: 120px;
+        height: 120px;
+        font-size: 3rem;
+    }
+    
+    .tech-stack {
+        justify-content: center;
+    }
+}

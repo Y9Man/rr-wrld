@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOURS | VIPERR</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="theme-dark page-tours">
+
+    <div class="preloader" id="preloader">
+        <div class="preloader__content">
+            <span class="preloader__text glitch" data-text="TOURS">TOURS</span>
+            <div class="preloader__bar"><div class="preloader__progress"></div></div>
+        </div>
+    </div>
+
+    <div class="overlay-noise"></div>
+
+    <header class="header" id="header">
+        <div class="container header__container">
+            <a href="index.html" class="logo">
+                VIPE<span class="logo__symbol">RR</span>
+            </a>
+
+            <nav class="nav">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="index.html" class="nav__link">Главная</a></li>
+                    <li class="nav__item"><a href="kai-angel.html" class="nav__link">Kai Angel</a></li>
+                    <li class="nav__item"><a href="9mice.html" class="nav__link">9mice</a></li>
+                    <li class="nav__item"><a href="tours.html" class="nav__link active">Tours</a></li>
+                    <li class="nav__item"><a href="merch.html" class="nav__link">Merch</a></li>
+                    <li class="nav__item"><a href="about-me.html" class="nav__link">about dev</a></li>
+                </ul>
+            </nav>
+
+            <div class="header__actions">
+                <button id="openAuthBtn" class="btn btn--small">
+                    <i class="fa-regular fa-user"></i> Войти
+                </button>
+                <div class="burger" id="burger">
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="index.html" class="mobile-nav__link">Main</a>
+            <a href="kai-angel.html" class="mobile-nav__link">Kai Angel</a>
+            <a href="9mice.html" class="mobile-nav__link">9mice</a>
+            <a href="tours.html" class="mobile-nav__link active">Tours</a>
+            <a href="merch.html" class="mobile-nav__link">Merch</a>
+            <a href="about-me.html" class="mobile-nav__link">about dev</a>
+            <button id="mobileAuthBtn" class="mobile-nav__link btn-text-style">
+                <i class="fa-regular fa-user"></i> ВОЙТИ
+            </button>
+        </nav>
+    </div>
+
+    <main class="main">
+        
+        <section class="hero hero--tours" style="height: 60vh; min-height: 400px;">
+            <div class="hero__bg">
+                <div class="hero__overlay"></div>
+                <img src="assets/img/viperr_bg.jpg" class="hero__image">
+            </div>
+
+            <div class="container hero__content text-center">
+                <h1 class="hero__title fade-up">ТУРЫ RR</h1>
+                <p class="hero__desc fade-up delay-1">2026</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h2 class="section-title">Select Tour</h2>
+                    <div class="section-line"></div>
+                </div>
+
+                <div class="tours-grid">
+                    <div class="tour-card fade-in">
+                        <div class="tour-image">
+                            <img src="assets/img/tours/kait.jpg" alt="Kai Angel Tour" onerror="this.src='assets/img/artists/kai/kai.jpg'">
+                            <div class="tour-overlay">
+                                <h3>KAI ANGEL</h3>
+                                <p>winter tour</p>
+                            </div>
+                        </div>
+                        <div class="tour-actions">
+                            <a href="https://without-events.ru/kai_angel" target="_blank" class="btn btn--primary btn--full">КУПИТЬ БИЛЕТЫ</a>
+                        </div>
+                    </div>
+
+                    <div class="tour-card fade-in delay-1">
+                        <div class="tour-image">
+                            <img src="assets/img/tours/9t.jpg" alt="9mice Tour" onerror="this.src='assets/img/artists/9mice/9mice.jpg'">
+                            <div class="tour-overlay">
+                                <h3>9MICE</h3>
+                                <p>mean machine tour</p>
+                            </div>
+                        </div>
+                        <div class="tour-actions">
+                            <a href="https://9mice.one/tour" target="_blank" class="btn btn--primary btn--full">КУПИТЬ БИЛЕТЫ</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <div class="container footer__container">
+            <div class="footer__brand">
+                <h2>VIPERR</h2>
+                <p>Designed by <a href="about-me.html">y9man</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <div class="player-bar" id="player-bar">
+        <div class="player-container">
+            <div class="player-info">
+                <img src="" alt="Cover" id="player-cover" class="player-cover">
+                <div class="player-meta">
+                    <h4 id="player-title">Track Title</h4>
+                    <p id="player-artist">Artist Name</p>
+                </div>
+            </div>
+            <div class="player-center">
+                <div class="player-controls">
+                    <button class="player-btn" id="prev-btn"><i class="fa-solid fa-backward-step"></i></button>
+                    <button class="player-btn play-pause" id="play-pause-btn"><i class="fa-solid fa-play"></i></button>
+                    <button class="player-btn" id="next-btn"><i class="fa-solid fa-forward-step"></i></button>
+                </div>
+                <div class="player-progress">
+                    <span id="current-time">0:00</span>
+                    <input type="range" id="progress-bar" value="0" max="100">
+                    <span id="duration">0:00</span>
+                </div>
+            </div>
+            <div class="player-volume">
+                <i class="fa-solid fa-volume-high" id="volume-icon"></i>
+                <input type="range" id="volume-bar" value="80" max="100">
+            </div>
+            <audio id="audio-source"></audio>
+        </div>
+    </div>
+
+    <div class="auth-overlay" id="authOverlay">
+        <div class="auth-modal glass-card">
+            <button class="auth-close" id="authClose"><i class="fa-solid fa-xmark"></i></button>
+            <div id="authForms">
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Вход</button>
+                    <button class="auth-tab" data-tab="register">Регистрация</button>
+                </div>
+                <div class="social-login">
+                    <p style="text-align:center; color:#888; margin-bottom:15px; font-size:0.9rem;">Или через:</p>
+                    <div class="social-btns">
+                        <button id="googleLogin" class="btn-social google"><i class="fa-brands fa-google"></i> Google</button>
+                        <button id="githubLogin" class="btn-social github"><i class="fa-brands fa-github"></i> GitHub</button>
+                    </div>
+                    <div class="section-line" style="margin: 20px auto; opacity: 0.2; width: 100%;"></div>
+                </div>
+                <form id="loginForm" class="auth-form active">
+                    <input type="email" id="loginName" placeholder="Email" required>
+                    <input type="password" id="loginPass" placeholder="Пароль" required>
+                    <button type="submit" class="btn btn--primary btn--full">ВОЙТИ</button>
+                </form>
+                <form id="registerForm" class="auth-form">
+                    <input type="text" id="regName" placeholder="Придумай никнейм" required>
+                    <input type="email" id="regEmail" placeholder="Email" required>
+                    <input type="password" id="regPass" placeholder="Пароль" required>
+                    <button type="submit" class="btn btn--primary btn--full">СОЗДАТЬ АККАУНТ</button>
+                </form>
+            </div>
+            <div id="userProfile" class="user-profile" style="display: none;">
+                <div class="profile-header">
+                    <div class="profile-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
+                    <div class="profile-name-container">
+                        <h3 id="profileName">User Name</h3>
+                        <i class="fa-solid fa-pen-to-square edit-name-btn" id="editNameBtn" title="Сменить ник"></i>
+                    </div>
+                    <span class="profile-status">VIP FAN</span>
+                </div>
+                <div class="profile-stats">
+                    <div class="stat-item"><span>0</span><p>Tracks</p></div>
+                    <div class="stat-item"><span>0</span><p>Shows</p></div>
+                </div>
+                <button id="logoutBtn" class="btn btn--outline btn--full">ВЫЙТИ</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/albums.js"></script>
+    <script src="assets/js/player.js"></script>
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>
