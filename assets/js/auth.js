@@ -80,40 +80,44 @@ document.addEventListener('DOMContentLoaded', () => {
     // ==========================================
 
     // --- ФУНКЦИЯ ДЛЯ СОЦСЕТЕЙ (Google / GitHub) ---
+    // --- ФУНКЦИЯ ДЛЯ СОЦСЕТЕЙ (С ЗАЩИТОЙ ОТ ДВОЙНОГО КЛИКА) ---
     function socialLogin(provider) {
+        // 1. Блокируем кнопки, чтобы нельзя было нажать второй раз
+        if (googleBtn) googleBtn.disabled = true;
+        if (githubBtn) githubBtn.disabled = true;
+        
+        // Визуально показываем, что процесс идет (опционально)
+        if (googleBtn) googleBtn.style.opacity = "0.5";
+        
         auth.signInWithPopup(provider)
             .then((result) => {
                 const user = result.user;
-                // Сохраняем пользователя в БД (merge: true, чтобы не затереть старые данные)
+                // Сохраняем юзера в базу
                 return db.collection("users").doc(user.uid).set({
                     username: user.displayName || user.email.split('@')[0],
                     email: user.email,
-                    avatar: user.photoURL, // Берем аватарку от Google/GitHub
+                    avatar: user.photoURL,
                     lastLogin: firebase.firestore.FieldValue.serverTimestamp(),
                     status: "VIP FAN"
                 }, { merge: true });
             })
             .then(() => {
-                console.log("Успешный вход через соцсеть");
+                console.log("Успешный вход!");
             })
             .catch((error) => {
-                console.error(error);
-                alert("Ошибка: " + error.message);
+                // Игнорируем ошибку, если пользователь просто закрыл окно сам
+                if (error.code !== 'auth/popup-closed-by-user' && error.code !== 'auth/cancelled-popup-request') {
+                    alert("Ошибка: " + error.message);
+                }
+            })
+            .finally(() => {
+                // 2. В ЛЮБОМ СЛУЧАЕ разблокируем кнопки обратно
+                if (googleBtn) {
+                    googleBtn.disabled = false;
+                    googleBtn.style.opacity = "1";
+                }
+                if (githubBtn) githubBtn.disabled = false;
             });
-    }
-
-    if (googleBtn) {
-        googleBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            socialLogin(provider);
-        });
-    }
-
-    if (githubBtn) {
-        githubBtn.addEventListener('click', () => {
-            const provider = new firebase.auth.GithubAuthProvider();
-            socialLogin(provider);
-        });
     }
 
     // --- РЕГИСТРАЦИЯ (Email) ---
